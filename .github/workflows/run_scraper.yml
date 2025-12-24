@@ -1,19 +1,36 @@
 on:
   schedule:
-    - cron: '*/5 * * * *'  # 매 5분마다 실행 설정
-  workflow_dispatch:       # 수동 실행 버튼 유지
-  push:                    # 코드 변경 시 즉시 실행 유지
+    - cron: '*/5 * * * *'
+  workflow_dispatch:
+  push:
     branches: [ main ]
+
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+
+      # 1. 파이썬 설치 단계 추가
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+
+      # 2. 필요한 라이브러리 설치 (bs4, requests 등)
+      - name: Install dependencies
+        run: |
+          pip install requests beautifulsoup4
+
+      # 3. 이제 스크립트 실행
       - name: Run Scraper
         run: python scraper.py
+
+      # 4. 변경된 데이터 저장
       - name: Push Updates
         run: |
-          git config --global user.name 'Bot'
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
           git add data.json
-          git commit -m "Update Dividend Data"
+          git commit -m "Update Dividend Data" || echo "No changes to commit"
           git push
