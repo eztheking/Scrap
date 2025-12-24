@@ -1,0 +1,16 @@
+on:
+  schedule:
+    - cron: '0 0 1 * *' # 매월 1일 자정에 실행
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Run Scraper
+        run: python scraper.py
+      - name: Push Updates
+        run: |
+          git config --global user.name 'Bot'
+          git add data.json
+          git commit -m "Update Dividend Data"
+          git push
