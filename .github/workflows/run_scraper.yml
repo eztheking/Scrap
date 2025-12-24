@@ -1,14 +1,9 @@
-name: Update Dividend Data
 on:
   schedule:
-    - cron: '0 0 1 * *' # 기존 설정 (매달 1일)
-  workflow_dispatch:      # 이 줄을 추가 (수동 실행 버튼 활성화)
-  push:                   # 이 줄을 추가 (코드를 수정해서 올릴 때마다 즉시 실행)
+    - cron: '*/5 * * * *'  # 매 5분마다 실행 설정
+  workflow_dispatch:       # 수동 실행 버튼 유지
+  push:                    # 코드 변경 시 즉시 실행 유지
     branches: [ main ]
-
-#on:
-#  schedule:
-#    - cron: '0 0 1 * *' # 매월 1일 자정에 실행
 jobs:
   build:
     runs-on: ubuntu-latest
