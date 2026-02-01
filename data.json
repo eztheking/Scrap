@@ -1,5 +1,11 @@
 [
     {
+        "date": "2026-02",
+        "name": "RISE 200위클리커버드콜",
+        "expected_div": 160,
+        "tax_div": 5
+    },
+    {
         "date": "2026-01",
         "name": "RISE 200위클리커버드콜",
         "expected_div": 160,
